@@ -4,29 +4,30 @@ CREATE DATABASE workplace_db;
 USE workplace_db;
 
 CREATE TABLE department (
-    id INT PRIMARY KEY,
-    department_name VARCHAR(30)
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30) NOT NULL
 );
 
-CREATE TABLE job (
-    id INT PRIMARY KEY,
-    title VARCHAR(30),
-    salary DECIMAL,
-    department_id INT
+CREATE TABLE role (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(30) NOT NULL,
+    salary DECIMAL NOT NULL,
+    department_id INT NOT NULL,
+    FOREIGN KEY (department_id)
+    REFERENCES department(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE employee (
-    id INT PRIMARY KEY,
-    first_name VARCHAR(30),
-    last_name VARCHAR(30),
-    role_id INT,
-    manager_id INT
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(30) NOT NULL,
+    last_name VARCHAR(30) NOT NULL,
+    role_id INT NOT NULL,
+    FOREIGN KEY (role_id)
+    REFERENCES role(id)
+    ON DELETE CASCADE,
+    manager_id INT,
+    FOREIGN KEY (manager_id)
+    REFERENCES employee(id)
+    ON DELETE SET NULL
 );
-
-
--- employee
--- id: INT PRIMARY KEY
--- first_name: VARCHAR(30) to hold employee first name
--- last_name: VARCHAR(30) to hold employee last nam
--- role_id: INT to hold reference to employee role
--- manager_id: INT to hold reference to another employee that is the manager of the current employee (null if the employee has no manager)

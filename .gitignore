@@ -70,3 +70,5 @@ yarn.lock
 
 # vscode specific files
 *.code-workspace
+
+node_modules
