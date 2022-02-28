@@ -29,4 +29,4 @@ If you have any questions please email me at martinjcorr2@gmail.com, or follow m
 
 ## Walkthrough Video
 
-<a href='https://drive.google.com/file/d/1Iqm-HWWTu5_b9mwXLd8JytE4kdmYYMeJ/view?usp=sharing'>Walkthrough Video</a>
+<a href='https://drive.google.com/file/d/1Iqm-HWWTu5_b9mwXLd8JytE4kdmYYMeJ/view?usp=sharing' target='_blank'>Walkthrough Video</a>
