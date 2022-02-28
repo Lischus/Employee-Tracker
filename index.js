@@ -1,5 +1,5 @@
-const inquirer = require('inquirer');
-const mysql2 = require('mysql2');
+const inquirer = require('inquirer')
+const mysql2 = require('mysql2')
 require('console.table')
 
 const db = mysql2.createConnection(
@@ -10,7 +10,7 @@ const db = mysql2.createConnection(
         database: 'workplace_db'
     },
     console.log(`Connected to the workplace_db database.`)
-);
+)
 
 function menu() {
     //This is setting up the menu
@@ -162,28 +162,60 @@ function addRole() {
 }
 
 function updateEmployeeRole() {
-    inquirer.prompt([{
-        type: "input",
-        name: "oldRole",
-        message: "What role would you like to update?"
-    },
-    {
-        type: "input",
-        name: "newRole",
-        message: "What will the role be now?"
+    let roles = []
+    function chooseRole() {
+        db.query("SELECT * FROM role", (err, res) => {
+            if (err) {
+                console.log(err)
+            } else {
+                for (let i = 0; i < res.length; i++) {
+                    roles.push(res[i].title);
+                }
+            }
+        })
+        return roles;
     }
-]).then((answer) => {
-    const sql = `UPDATE role (title) SET "title.${answer.oldRole}" = "${answer.newRole}"`
-    const params = ``
-
-    db.query(sql, params, (err, rows) => {
+    db.connect(function (err) {
         if (err) {
             console.log(err)
         } else {
-            console.log("Role successfully updated!")
+            db.query("SELECT employee.last_name, role.title FROM employee JOIN role ON employee.role_id = role.id", (err, res) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    inquirer.prompt([{
+                        type: "list",
+                        message: "Which employee would you like to update?",
+                        name: "updatedEmployee",
+                        choices: function () {
+                            let updatedEmployee = [];
+                            for (let i = 0; i < res.length; i++) {
+                                updatedEmployee.push(res[i].last_name);
+                            }
+                            return updatedEmployee;
+                        }
+                    },
+                    {
+                        type: "list",
+                        message: "What role would you like them to have?",
+                        name: "updatedRole",
+                        choices: chooseRole()
+                    }
+                    ]).then(answer => {
+                        db.query(`UPDATE employee SET role_id = ${chooseRole().indexOf(answer.updatedRole) + 1} WHERE last_name = "${answer.updatedEmployee}"`,
+                            function (err) {
+                                if (err) {
+                                    console.log(err)
+                                } else {
+                                    console.log("Role successfully updated!")
+                                    menu()
+                                }
+                            })
+                    })
+                }
+            })
         }
     })
-})
 }
 
-menu();
+menu()
