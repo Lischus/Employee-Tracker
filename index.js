@@ -100,7 +100,7 @@ function addEmployee() {
             if (err) {
                 console.log(err)
             } else {
-                console.table(rows)
+                console.log("Employee successfully added!")
                 menu()
             }
         })
