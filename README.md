@@ -30,3 +30,5 @@ If you have any questions please email me at martinjcorr2@gmail.com, or follow m
 ## Walkthrough Video
 
 <a href='https://drive.google.com/file/d/1Iqm-HWWTu5_b9mwXLd8JytE4kdmYYMeJ/view?usp=sharing' target="_blank">Walkthrough Video</a>
+
+![image](https://user-images.githubusercontent.com/94202788/175411780-4de8f166-1f70-49e4-b701-ecd6a716afa2.png)
